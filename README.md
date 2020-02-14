@@ -42,6 +42,6 @@ stdout {}
 
 
 ```console
-hoome:~$ /opt/logstash/bin/logstash -f csv.conf
+home:~$ /opt/logstash/bin/logstash -f csv.conf
 
 ```
