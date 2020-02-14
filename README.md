@@ -1,6 +1,9 @@
 # elasticsearch_help
 
 ## Insert data from csv to index
+
+file:csv.conf
+
 ```json
 input {
   file {
@@ -22,4 +25,10 @@ output {
   }
 stdout {}
 }
+```
+
+
+```console
+hoome:~$ /opt/logstash/bin/logstash -f csv.conf
+
 ```
