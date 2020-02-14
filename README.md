@@ -1,5 +1,18 @@
 # elasticsearch_help
-
+## Create Index
+```json
+PUT user/_mapping
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "name": {
+      "type": "text"
+    }
+  }
+}
+```
 ## Insert data from csv to index
 
 file:csv.conf
