@@ -22,7 +22,7 @@ file:csv.conf
 ```json
 input {
   file {
-    path => "/home/example.csv"
+    path => "/home/dataset.csv"
     start_position => "beginning"
    sincedb_path => "/dev/null"
   }
@@ -31,6 +31,7 @@ filter {
   csv {
       separator => ";"
      columns => ["id", "description"]
+     quote_char => "'"
   }
 }
 output {
