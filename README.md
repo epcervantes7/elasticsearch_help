@@ -1,5 +1,7 @@
 # elasticsearch_help
+
 ## Create Index
+
 ```json
 PUT shop_brasil_products/_mapping
 {
@@ -28,13 +30,13 @@ input {
 filter {
   csv {
       separator => ";"
-     columns => ["id", "name"]
+     columns => ["id", "description"]
   }
 }
 output {
    elasticsearch {
      hosts => "http://localhost:9200"
-     index => "user"
+     index => "shop_brasil_products"
   }
 stdout {}
 }
