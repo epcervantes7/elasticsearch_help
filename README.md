@@ -1,13 +1,13 @@
 # elasticsearch_help
 ## Create Index
 ```json
-PUT user/_mapping
+PUT shop_brasil_products/_mapping
 {
   "properties": {
     "id": {
       "type": "keyword"
     },
-    "name": {
+    "description": {
       "type": "text"
     }
   }
