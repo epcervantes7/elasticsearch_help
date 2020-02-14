@@ -47,3 +47,12 @@ stdout {}
 home:~$ /opt/logstash/bin/logstash -f csv.conf
 
 ```
+## number of replicas
+```
+curl -XPUT 'http://localhost:9200/_settings' -d '
+{
+    "index" : {
+        "number_of_replicas" : 0
+    }
+}'
+```
