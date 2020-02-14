@@ -1,7 +1,7 @@
 # elasticsearch_help
 
 ## Insert data from csv to index
-'''
+```json
 input {
   file {
     path => "/home/example.csv"
@@ -22,4 +22,4 @@ output {
   }
 stdout {}
 }
-'''
+```
