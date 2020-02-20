@@ -121,3 +121,98 @@ PUT base_grupo_big/_settings
 ```
 POST /base_grupo_big/_open
 ```
+
+## index shopping brasil
+```
+PUT shopping_brasil
+```
+
+```
+PUT shopping_brasil/_mapping
+{
+  "properties": {
+    "CATEGORIA": {
+      "type": "text"
+    },
+    "SUBCATEGORIA": {
+      "type": "text"
+    },
+    "DESCRICAOREDUZIDA": {
+      "type": "text"
+    },
+    "CLASSIFICACAO_COMPLETA": {
+      "type": "text"
+    },
+    "ORDEM": {
+      "type": "text"
+    },
+    "IDPRDT": {
+      "type": "text"
+    },
+    "MODELO": {
+      "type": "text"
+    },
+    "DESCRICAO": {
+      "type": "text"
+    },
+    "IDMARCA": {
+      "type": "text"
+    },
+    "IDSEGMENTOBASE": {
+      "type": "text"
+    },
+    "IDGRUPOBASE": {
+      "type": "text"
+    },
+    "GRUPOBASE": {
+      "type": "text"
+    },
+    "GENERICO": {
+      "type": "text"
+    },
+    "SITUACAO": {
+      "type": "text"
+    },
+    "ADS": {
+      "type": "text"
+    },
+    "UNIDADE": {
+      "type": "text"
+    },
+    "IDTIPOUNIDADE": {
+      "type": "text"
+    },
+    "APRESENTACAO": {
+      "type": "text"
+    },
+    "STATUS": {
+      "type": "text"
+    }
+  }
+}
+```
+
+
+```json
+input {
+  file {
+    path => "/home/Banco_SB_completa.csv"
+    start_position => "beginning"
+   sincedb_path => "/dev/null"
+  }
+}
+filter {
+  csv {
+      separator => ";"     columns => ["CATEGORIA","SUBCATEGORIA","DESCRICAOREDUZIDA","CLASSIFICACAO_COMPLETA","ORDEM","IDPRDT","MODELO","DESCRICAO","IDMARCA","MARCA","IDSEGMENTOBASE","SEGMENTOBASE","IDGRUPOBASE","GRUPOBASE","GENERICO","SITUACAO","ADS","UNIDADE","IDTIPOUNIDADE","APRE
+SENTACAO","STATUS"]
+     quote_char => "'"
+  }
+}
+output {
+   elasticsearch {
+     hosts => "http://localhost:9200"
+     index => "shopping_brasil"
+  }
+stdout {}
+}
+```
