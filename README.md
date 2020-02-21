@@ -1,6 +1,8 @@
 # elasticsearch_help
 
-
+```
+docker run -p 5601:5601 -p 9200:9200  -p 5044:5044 -v /home/evelyn/Documentos/shopbrasil/shopbrasil_ocr/data/database/:/var/lib/elasticsearch --name elk2 sebp/elk
+```
 
 ## index shopping brasil
 ```
@@ -126,7 +128,7 @@ input {
 filter {
   csv {
       separator => ";"     
-      columns => ["IDPRDT","MARCA","MODELO","DESCRICAO","IDMARCA","IDSEGMENTOBASE","SEGMENTOBASE","IDGRUPOBASE","GRUPOBASE","GENERICO","SITUACAO","ADS","UNIDADE","IDTIPOUNIDADE","APRESENTACAO","STATUS"]
+      columns => ["IDPRDT","MARCA","MODELO","DESCRICAO","IDMARCA","IDSEGMENTOBASE","SEGMENTOBASE","IDGRUPOBASE","GRUPOBASE","GENERICO","SITUACAO","ADS","UNIDADE","IDTIPOUNIDADE","APRESENTACAO"]
      quote_char => "'"
   }
 }
@@ -137,4 +139,11 @@ output {
   }
 stdout {}
 }
+```
+## stop and restart logstash
+
+```
+/etc/init.d/logstash stop
+
+/opt/logstash/bin/logstash -f insert_data.conf
 ```
