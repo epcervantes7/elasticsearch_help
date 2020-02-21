@@ -57,9 +57,6 @@ PUT shopping_brasil/_mapping
     },
     "APRESENTACAO": {
       "type": "text"
-    },
-    "STATUS": {
-      "type": "text"
     }
   }
 }
