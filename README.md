@@ -1,126 +1,6 @@
 # elasticsearch_help
 
-## Create Index
-```
-PUT base_grupo_big
-```
 
-```json
-PUT base_grupo_big/_mapping
-{
-  "properties": {
-    "DIVISAO": {
-      "type": "text"
-    },
-    "SUBCATEGORIA": {
-      "type": "text"
-    },
-    "FINELINE": {
-      "type": "text"
-    },
-    "UPC": {
-      "type": "text"
-    },
-    "DESCRICAO_DO_TEM": {
-      "type": "text"
-    },
-    "TIPO_CAIXA_FORN": {
-      "type": "text"
-    },
-    "COD_FAMILIA": {
-      "type": "text"
-    },
-    "MARCA": {
-      "type": "text"
-    },
-    "TAMANHO": {
-      "type": "text"
-    }
-  }
-}
-```
-## Insert data from csv to index
-
-file:csv.conf
-
-```json
-input {
-  file {
-    path => "/home/base_grupo_big.csv"
-    start_position => "beginning"
-   sincedb_path => "/dev/null"
-  }
-}
-filter {
-  csv {
-      separator => ";"
-     columns => ["DIVISAO","SUBCATEGORIA","FINELINE","UPC","DESCRICAO_DO_ITEM","TIPO_CAIXA_FORN","COD_FAMILIA","MARCA","TAMANHO"]
-     quote_char => "'"
-  }
-}
-output {
-   elasticsearch {
-     hosts => "http://localhost:9200"
-     index => "base_grupo_big"
-  }
-stdout {}
-}
-```
-
-
-```console
-home:~$ /opt/logstash/bin/logstash -f base_grupo_big.conf
-
-```
-## number of replicas
-```
-PUT /_settings
-{
-    "index" : {
-        "number_of_replicas" : 0
-    }
-}'
-```
-## update settings analyzer
-```
-POST /base_grupo_big/_close
-```
-
-```
-PUT base_grupo_big/_settings
-{
-    "analysis": {
-      "filter": {
-        "brazilian_stop": {
-          "type":       "stop",
-          "stopwords":  "_brazilian_" 
-        },
-        "brazilian_keywords": {
-          "type":       "keyword_marker",
-          "keywords":   ["exemplo"] 
-        },
-        "brazilian_stemmer": {
-          "type":       "stemmer",
-          "language":   "brazilian"
-        }
-      },
-      "analyzer": {
-        "rebuilt_brazilian": {
-          "tokenizer":  "standard",
-          "filter": [
-            "lowercase",
-            "brazilian_stop",
-            "brazilian_keywords",
-            "brazilian_stemmer"
-          ]
-        }
-      }
-    }
-}
-```
-```
-POST /base_grupo_big/_open
-```
 
 ## index shopping brasil
 ```
@@ -131,22 +11,10 @@ PUT shopping_brasil
 PUT shopping_brasil/_mapping
 {
   "properties": {
-    "CATEGORIA": {
-      "type": "text"
-    },
-    "SUBCATEGORIA": {
-      "type": "text"
-    },
-    "DESCRICAOREDUZIDA": {
-      "type": "text"
-    },
-    "CLASSIFICACAO_COMPLETA": {
-      "type": "text"
-    },
-    "ORDEM": {
-      "type": "text"
-    },
     "IDPRDT": {
+      "type": "text"
+    },
+    "MARCA": {
       "type": "text"
     },
     "MODELO": {
@@ -159,6 +27,9 @@ PUT shopping_brasil/_mapping
       "type": "text"
     },
     "IDSEGMENTOBASE": {
+      "type": "text"
+    },
+    "SEGMENTOBASE": {
       "type": "text"
     },
     "IDGRUPOBASE": {
@@ -191,20 +62,71 @@ PUT shopping_brasil/_mapping
   }
 }
 ```
+## update settings analyzer
+```
+POST /shopping_brasil/_close
+```
+
+```
+PUT shopping_brasil/_settings
+{
+    "analysis": {
+      "filter": {
+        "brazilian_stop": {
+          "type":       "stop",
+          "stopwords":  "_brazilian_" 
+        },
+        "brazilian_keywords": {
+          "type":       "keyword_marker",
+          "keywords":   ["exemplo"] 
+        },
+        "brazilian_stemmer": {
+          "type":       "stemmer",
+          "language":   "brazilian"
+        }
+      },
+      "analyzer": {
+        "rebuilt_brazilian": {
+          "tokenizer":  "standard",
+          "filter": [
+            "lowercase",
+            "brazilian_stop",
+            "brazilian_keywords",
+            "brazilian_stemmer"
+          ]
+        }
+      }
+    }
+}
+```
+```
+POST /shopping_brasil/_open
+```
+
+## number of replicas
+```
+PUT /_settings
+{
+    "index" : {
+        "number_of_replicas" : 0
+    }
+}
+```
+## Insert data from csv to index
 
 
 ```json
 input {
   file {
-    path => "/home/Banco_SB_completa.csv"
+    path => "/var/lib/elasticsearch/CLEAN_BANCO_ DE_DADOS_SHOPPING_BRASIL.csv"
     start_position => "beginning"
    sincedb_path => "/dev/null"
   }
 }
 filter {
   csv {
-      separator => ";"     columns => ["CATEGORIA","SUBCATEGORIA","DESCRICAOREDUZIDA","CLASSIFICACAO_COMPLETA","ORDEM","IDPRDT","MODELO","DESCRICAO","IDMARCA","MARCA","IDSEGMENTOBASE","SEGMENTOBASE","IDGRUPOBASE","GRUPOBASE","GENERICO","SITUACAO","ADS","UNIDADE","IDTIPOUNIDADE","APRE
-SENTACAO","STATUS"]
+      separator => ";"     
+      columns => ["IDPRDT","MARCA","MODELO","DESCRICAO","IDMARCA","IDSEGMENTOBASE","SEGMENTOBASE","IDGRUPOBASE","GRUPOBASE","GENERICO","SITUACAO","ADS","UNIDADE","IDTIPOUNIDADE","APRESENTACAO","STATUS"]
      quote_char => "'"
   }
 }
