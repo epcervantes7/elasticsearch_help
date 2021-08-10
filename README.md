@@ -1,7 +1,7 @@
 # elasticsearch_help
 
 ```
-docker run -p 5601:5601 -p 9200:9200  -p 5044:5044 -v /home/evelyn/Documentos/shopbrasil/shopbrasil_ocr/data/database/:/var/lib/elasticsearch --name elk2 sebp/elk
+docker run -p 5601:5601 -p 9200:9200  -p 5044:5044 -v /home/eve/Documentos/shop_brasil/shop_brasil_ocr/data/database/:/var/lib/elasticsearch --name elk2 sebp/elk
 ```
 
 ## index shopping brasil
@@ -10,7 +10,7 @@ PUT shopping_brasil
 ```
 
 ```
-PUT shopping_brasil/_mapping
+PUT shop_brasil/_mapping
 {
   "properties": {
     "IDPRDT": {
@@ -63,11 +63,11 @@ PUT shopping_brasil/_mapping
 ```
 ## update settings analyzer
 ```
-POST /shopping_brasil/_close
+POST /shop_brasil/_close
 ```
 
 ```
-PUT shopping_brasil/_settings
+PUT shop_brasil/_settings
 {
     "analysis": {
       "filter": {
@@ -99,7 +99,7 @@ PUT shopping_brasil/_settings
 }
 ```
 ```
-POST /shopping_brasil/_open
+POST /shop_brasil/_open
 ```
 
 ## number of replicas
@@ -117,7 +117,7 @@ PUT /_settings
 ```json
 input {
   file {
-    path => "/var/lib/elasticsearch/CLEAN_BANCO_ DE_DADOS_SHOPPING_BRASIL.csv"
+    path => "/var/lib/elasticsearch/CLEAN_DATA_BASE_BRASIL.csv"
     start_position => "beginning"
    sincedb_path => "/dev/null"
   }
